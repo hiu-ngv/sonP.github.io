@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đánh Giá Nhân Viên</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #3498db;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+        }
+
+        .form-group textarea,
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        .form-group textarea:focus,
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+        }
+
+        .form-group textarea.short {
+            min-height: 60px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .skill-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e0e6ed;
+        }
+
+        .skill-card label {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .skill-card label::before {
+            content: '📌';
+            margin-right: 8px;
+        }
+
+        .skill-card textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+            min-height: 70px;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            background: white;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e6ed;
+        }
+
+        .btn {
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .btn-secondary:hover {
+            background: #d5dbdb;
+        }
+
+        .footer {
+            background: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .form-content {
+                padding: 20px;
+            }
+
+            .btn-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Đánh Giá Nhân Viên</h1>
+            <p>Mẫu đánh giá năng lực và hiệu suất làm việc</p>
+        </div>
+
+        <form class="form-content" id="evaluationForm">
+            <!-- Đánh giá kỹ năng -->
+            <div class="section">
+                <h2 class="section-title">Đánh Giá Kỹ Năng</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <label for="adaptability_note">Khả năng thích ứng</label>
+                        <textarea id="adaptability_note" name="adaptability_note" placeholder="Nhận xét về khả năng thích ứng với môi trường, công nghệ mới..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="quality_note">Chất lượng công việc</label>
+                        <textarea id="quality_note" name="quality_note" placeholder="Nhận xét về chất lượng và độ chính xác của công việc..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="responsibility_note">Tinh thần trách nhiệm</label>
+                        <textarea id="responsibility_note" name="responsibility_note" placeholder="Nhận xét về tinh thần trách nhiệm với công việc..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="communication_note">Kỹ năng giao tiếp</label>
+                        <textarea id="communication_note" name="communication_note" placeholder="Nhận xét về khả năng giao tiếp với đồng nghiệp, khách hàng..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="leadership_note">Năng lực lãnh đạo</label>
+                        <textarea id="leadership_note" name="leadership_note" placeholder="Nhận xét về khả năng dẫn dắt, quản lý nhóm..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="documentation_note">Kỹ năng tài liệu hóa</label>
+                        <textarea id="documentation_note" name="documentation_note" placeholder="Nhận xét về khả năng viết tài liệu, báo cáo..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="negotiation_note">Kỹ năng đàm phán</label>
+                        <textarea id="negotiation_note" name="negotiation_note" placeholder="Nhận xét về khả năng đàm phán, thương lượng..."></textarea>
+                    </div>
+
+                    <div class="skill-card">
+                        <label for="english_note">Trình độ tiếng Anh</label>
+                        <textarea id="english_note" name="english_note" placeholder="Nhận xét về khả năng sử dụng tiếng Anh trong công việc..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tổng kết đánh giá -->
+            <div class="section">
+                <h2 class="section-title">Tổng Kết Đánh Giá</h2>
+
+                <div class="form-group">
+                    <label for="summary">Tổng kết <span class="required">*</span></label>
+                    <textarea id="summary" name="summary" placeholder="Tổng kết đánh giá chung về nhân viên..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="plan">Kế hoạch phát triển</label>
+                    <textarea id="plan" name="plan" placeholder="Kế hoạch đào tạo, phát triển kỹ năng trong tương lai..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="result">Kết quả đạt được</label>
+                    <textarea id="result" name="result" placeholder="Các kết quả, thành tựu đã đạt được trong kỳ đánh giá..."></textarea>
+                </div>
+            </div>
+
+            <!-- Nguyện vọng -->
+            <div class="section">
+                <h2 class="section-title">Nguyện Vọng Cá Nhân</h2>
+
+                <div class="form-group">
+                    <label for="desire">Mong muốn phát triển</label>
+                    <textarea id="desire" name="desire" placeholder="Mong muốn phát triển nghề nghiệp, vị trí công việc..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="preferredCoworkers">Đồng nghiệp mong muốn làm việc cùng</label>
+                    <textarea id="preferredCoworkers" name="preferredCoworkers" class="short" placeholder="Tên các đồng nghiệp mong muốn được làm việc cùng..."></textarea>
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">Xóa Form</button>
+                <button type="submit" class="btn btn-primary">Gửi Đánh Giá</button>
+            </div>
+        </form>
+
+        <div class="footer">
+            <p>© 2024 - Hệ thống đánh giá nhân viên</p>
+        </div>
+    </div>
+
+    <script>
+        function resetForm() {
+            document.getElementById('evaluationForm').reset();
+        }
+
+        document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                adaptability_note: document.getElementById('adaptability_note').value,
+                quality_note: document.getElementById('quality_note').value,
+                responsibility_note: document.getElementById('responsibility_note').value,
+                communication_note: document.getElementById('communication_note').value,
+                leadership_note: document.getElementById('leadership_note').value,
+                documentation_note: document.getElementById('documentation_note').value,
+                negotiation_note: document.getElementById('negotiation_note').value,
+                english_note: document.getElementById('english_note').value,
+                summary: document.getElementById('summary').value,
+                plan: document.getElementById('plan').value,
+                result: document.getElementById('result').value,
+                desire: document.getElementById('desire').value,
+                preferredCoworkers: document.getElementById('preferredCoworkers').value
+            };
+
+            console.log('Dữ liệu đánh giá:', JSON.stringify(formData, null, 2));
+            alert('Đánh giá đã được gửi thành công!\n\nXem console để xem dữ liệu JSON.');
+        });
+    </script>
+</body>
+</html>
